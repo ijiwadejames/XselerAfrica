@@ -1,0 +1,32 @@
+{
+  "name": "xseler",
+  "version": "1.0.0",
+  "description": "Career Development App",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backend": "nodemon server.js",
+    "frontend": "cd frontend && npm run start",
+    "app": "concurrently -n 'server/client' -c 'orange/green' \"nodemon server.js\" \"npm run frontend\" "
+  },
+  "author": "Ijiwade James Oluwafemi\u001b[A\u001b[B",
+  "license": "ISC",
+  "dependencies": {
+    "@google-ai/generativelanguage": "^2.3.0",
+    "axios": "^1.6.8",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "cheerio": "^1.0.0-rc.12",
+    "concurrently": "^8.2.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-async-handler": "^1.2.0",
+    "google-auth-library": "^9.9.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.3.4",
+    "nodemon": "^3.1.0",
+    "uuid": "^9.0.1"
+  }
+}

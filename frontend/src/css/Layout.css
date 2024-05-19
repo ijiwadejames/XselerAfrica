@@ -1,0 +1,27 @@
+/** @format */
+/* .layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.content {
+  flex: 1;
+} */
+footer {
+  flex-shrink: 0;
+  padding: 10px;
+  background-color: #023a76;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  font-size: 15px;
+}
+/* header {
+  width: 100%;
+  background-color: red;
+} */
+.headerStyle {
+  background-color: aliceblue;
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+}

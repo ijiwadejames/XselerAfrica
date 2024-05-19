@@ -1,0 +1,75 @@
+/** @format */
+
+body {
+  background-color: rgba(0, 0, 0, 0.02);
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/* .headerStyle {
+  background-color: black;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+} */
+
+/* * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+} */
+
+/* body {
+  font-family: "Poppins", sans-serif;
+  background: #e1e1e1;
+} */
+
+.App {
+  text-align: center;
+}
+
+.cont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.cont input {
+  width: 100%;
+  max-width: 400px;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.cont button {
+  width: 100%;
+  max-width: 400px;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  background: teal;
+  cursor: pointer;
+  color: #fff;
+}
+
+.cont button:hover {
+  background: #333;
+}
