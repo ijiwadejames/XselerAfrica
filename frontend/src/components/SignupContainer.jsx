@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { register, logout, reset } from "../features/auth/authSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Spinner from "./Spinner";
 
 const SignupContainer = () => {
   const { description } = useDataContext();
@@ -88,9 +89,7 @@ const SignupContainer = () => {
     // Set field value in Formik
     setFieldValue("password", value);
   };
-  if (isLoading) {
-    return <>Loading</>;
-  }
+
   return (
     <Formik
       initialValues={{ email: "", password: "" }} // Include password in initialValues
@@ -178,7 +177,7 @@ const SignupContainer = () => {
                   type="submit"
                   // disabled={isSubmitting}
                 >
-                  Join
+                  {isLoading ? <Spinner /> : "Join"}
                 </button>
 
                 {passReq && (

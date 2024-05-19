@@ -5,10 +5,11 @@ import DashboardFeeder from "../components/DashboardFeeder";
 import SideLayout from "../components/SideLayout";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
+  const { user, isLoading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (!user) {
@@ -17,9 +18,15 @@ const Dashboard = () => {
   }, [user]);
 
   return (
-    <SideLayout>
-      <DashboardFeeder />
-    </SideLayout>
+    <>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <SideLayout>
+          <DashboardFeeder />
+        </SideLayout>
+      )}
+    </>
   );
 };
 
