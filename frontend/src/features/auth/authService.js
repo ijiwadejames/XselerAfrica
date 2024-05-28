@@ -1,7 +1,6 @@
 /** @format */
 
 import axios from "axios";
-import Cookies from "js-cookie";
 const API_URL = "http://localhost:5000/api/user/";
 
 //Register User

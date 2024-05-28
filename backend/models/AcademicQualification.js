@@ -1,12 +1,20 @@
 /** @format */
 
 const mongoose = require("mongoose");
-const { required } = require("nodemon/lib/config");
 const Schema = mongoose.Schema;
-
+const { v4: uuidv4 } = require("uuid");
 const academicQualificationsSchema = new Schema(
   {
     _id: {
+      type: String,
+      default: uuidv4,
+      required: true,
+    },
+    qualCode: {
+      type: String,
+      required: true,
+    },
+    userId: {
       type: String,
       required: true,
     },

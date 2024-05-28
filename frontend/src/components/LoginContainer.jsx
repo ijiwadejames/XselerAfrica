@@ -20,7 +20,7 @@ import * as Yup from "yup";
 import { login, reset } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
-import Spinner from "./Spinner";
+import { ButtonSpinner } from "./Spinner";
 
 const LoginContainer = () => {
   const [show, setShow] = useState(false);
@@ -137,7 +137,7 @@ const LoginContainer = () => {
                   className="btn btn-sm btn-dark"
                   type="submit"
                 >
-                  {isLoading ? <Spinner /> : "Login"}
+                  {isLoading ? <ButtonSpinner /> : "Login"}
                 </button>
                 <div className="border-top mt-3 pt-3">
                   <FPassword />

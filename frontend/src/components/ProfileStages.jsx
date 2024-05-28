@@ -1,6 +1,6 @@
 /** @format */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PersonalDetails from "./MiddleBarComponents.jsx/PersonalDetails";
 import CareerObjective from "./MiddleBarComponents.jsx/CareerObjective";
 import AcademicQualifications from "./MiddleBarComponents.jsx/AcademicQualifications";

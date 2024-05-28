@@ -115,7 +115,7 @@ const usersList = {
   fname: "James",
   onames: "Oluwafemi",
   email: "ijiwadejames@gmail.com",
-  pnum: "08134014066",
+  phone: "08134014066",
   address: "3762C, New Jersey, USA",
   website: "www.xseler.com",
   linkedin: "jamesijiwade",

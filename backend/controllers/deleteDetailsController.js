@@ -3,6 +3,7 @@
 const asyncHandler = require("express-async-handler");
 const Objective = require("../models/Objective");
 const WorkExperience = require("../models/WorkExperience");
+const AcademicQualification = require("../models/AcademicQualification");
 
 const delCareerObjective = asyncHandler(async (req, res) => {
   const objCode_id = req.params.objectiveId;
@@ -32,18 +33,12 @@ const delCareerObjective = asyncHandler(async (req, res) => {
 });
 
 const delWorkExperience = asyncHandler(async (req, res) => {
-  const org_code = req.params.jobId;
-  const userId = req.params.id;
+  const { orgCode } = req.body;
   const loggedIn_user = req.user.id;
 
-  if (userId !== loggedIn_user) {
-    res.status(401).json({ message: "Unauthorized" });
-    return;
-  }
-
   const query = {
-    _id: loggedIn_user,
-    orgCode: org_code,
+    userId: loggedIn_user,
+    orgCode: orgCode,
   };
 
   const response = await WorkExperience.deleteOne(query);
@@ -58,4 +53,25 @@ const delWorkExperience = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { delWorkExperience, delCareerObjective };
+const delQual = asyncHandler(async (req, res) => {
+  const { id } = req.body;
+  const loggedIn_user = req.user.id;
+
+  const query = {
+    _id: id,
+    userId: loggedIn_user,
+  };
+
+  const response = await AcademicQualification.deleteOne(query);
+  if (response.deletedCount === 1) {
+    res.status(200).json({ message: "Successfully removed" });
+    return;
+  } else {
+    res
+      .status(401)
+      .json({ message: "No document matched the deletion criteria" });
+    return;
+  }
+});
+
+module.exports = { delWorkExperience, delCareerObjective, delQual };

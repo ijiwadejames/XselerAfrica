@@ -25,6 +25,11 @@ textarea {
 .inherit-background {
   background-color: inherit;
 }
+.zIndex {
+  position: fixed;
+  z-index: 1;
+  top: 50%;
+}
 label[for="Email"],
 label[for="Password"] {
   color: rgba(0, 0, 0, rgba(0, 0, 0, 0.6));

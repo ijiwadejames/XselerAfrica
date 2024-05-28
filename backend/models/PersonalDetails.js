@@ -12,11 +12,9 @@ const personalDetailsSchema = new Schema(
     },
     sname: {
       type: String,
-      required: [true, "Please Provide a Surname"],
     },
     fname: {
       type: String,
-      required: [true, "Please Provide a Firstname"],
     },
     onames: {
       type: String,
@@ -24,7 +22,7 @@ const personalDetailsSchema = new Schema(
     email: {
       type: String,
     },
-    pnum: {
+    phone: {
       type: String,
       required: [true, "Please Provide a Phone Number"],
     },

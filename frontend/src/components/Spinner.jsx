@@ -1,11 +1,13 @@
 /** @format */
 
-function Spinner() {
+export const Spinner = () => {
   return (
-    // <div className='loadingSpinnerContainer'>
-    <div className="loadingSpinner"></div>
-    // </div>
+    <div className="loadingSpinnerContainer">
+      <div className="loadingSpinner"></div>
+    </div>
   );
-}
+};
 
-export default Spinner;
+export const ButtonSpinner = () => {
+  return <div className="loadingSpinner"></div>;
+};

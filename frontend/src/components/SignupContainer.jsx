@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { register, logout, reset } from "../features/auth/authSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Spinner from "./Spinner";
+import { ButtonSpinner } from "./Spinner";
 
 const SignupContainer = () => {
   const { description } = useDataContext();
@@ -177,7 +177,7 @@ const SignupContainer = () => {
                   type="submit"
                   // disabled={isSubmitting}
                 >
-                  {isLoading ? <Spinner /> : "Join"}
+                  {isLoading ? <ButtonSpinner /> : "Join"}
                 </button>
 
                 {passReq && (

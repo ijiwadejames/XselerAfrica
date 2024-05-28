@@ -9,20 +9,10 @@ const AcademicQualification = require("../models/AcademicQualification");
 const WorkExperience = require("../models/WorkExperience");
 
 const personal = asyncHandler(async (req, res) => {
-  const {
-    avatar,
-    sname,
-    fname,
-    onames,
-    pnum,
-    address,
-    website,
-    linkedin,
-    portfolio,
-  } = req.body;
+  const { avatar, phone, address, website, linkedin, portfolio } = req.body;
 
   //Check for empty fields
-  if (!avatar || !sname || !fname || !onames || !pnum || !address) {
+  if (!phone || !address) {
     res.status(401).json({ message: "Fields cannot be empty" });
     return;
   }
@@ -31,34 +21,29 @@ const personal = asyncHandler(async (req, res) => {
   const user = req.user;
   const getUser = await User.findOne({ email: user.email });
 
+  //Check if User already has a completed personal details
+  const findUser = await Details.findById({ _id: getUser.id });
+
+  if (findUser) {
+    res.status(400).json({ message: "Details already exist" });
+    return;
+  }
+
   const myDetails = {
     _id: getUser.id,
     avatar: avatar,
-    sname: sname,
-    fname: fname,
-    onames: onames,
     email: getUser.email,
-    pnum: pnum,
+    phone: phone,
     address: address,
     website: website,
     linkedin: linkedin,
     portfolio: portfolio,
   };
 
-  //Check if User already has a completed personal details
-  const findUser = await Details.findById({ _id: getUser.id });
+  const newDetails = await Details.create(myDetails);
 
-  if (!findUser) {
-    const newDetails = await Details.create(myDetails);
-    if (newDetails) {
-      res.status(200).json({ message: newDetails });
-      return;
-    } else {
-      console.log("Error occured");
-      return;
-    }
-  } else {
-    res.status(400).json({ message: "Details already exists" });
+  if (response) {
+    res.status(200).json(response);
     return;
   }
 });
@@ -81,7 +66,7 @@ const objective = asyncHandler(async (req, res) => {
     };
     const response = await Objective.create(objectDetails);
     if (response) {
-      res.status(200).json({ message: "Objective created" });
+      res.status(200).json(response);
       return;
     } else {
       res.status(401).json({ message: "Not created" });
@@ -112,7 +97,7 @@ const hobbies = asyncHandler(async (req, res) => {
     };
     const response = await Hobbies.create(hobbiesDetails);
     if (response) {
-      res.status(200).json({ message: "Hobbies created" });
+      res.status(200).json(response);
       return;
     } else {
       res.status(401).json({ message: "Not created" });
@@ -139,9 +124,14 @@ const academicQualications = asyncHandler(async (req, res) => {
     iAttended: iAttended,
     degree: degree,
   });
+  if (findInstitution) {
+    res.status(400).json({ message: "Already exists" });
+    return;
+  }
 
   const iAttend = {
-    _id: getUser.id,
+    qualCode: generateRandomHex(20),
+    userId: getUser.id,
     iAttended: iAttended,
     dAStarted: dAStarted,
     dAEnded: dAEnded,
@@ -149,17 +139,13 @@ const academicQualications = asyncHandler(async (req, res) => {
     course: course,
     dClass: dClass,
   };
-  if (!findInstitution) {
-    const addInstitution = AcademicQualification.create(iAttend);
-    if (addInstitution) {
-      res.status(200).json({ message: "Institution added" });
-      return;
-    } else {
-      res.status(401).json({ message: "Not added" });
-      return;
-    }
+
+  const response = await AcademicQualification.create(iAttend);
+  if (response) {
+    res.status(200).json(response);
+    return;
   } else {
-    res.status(401).json({ message: "Not created" });
+    res.status(401).json({ message: "Not added" });
     return;
   }
 });
@@ -184,7 +170,7 @@ const workExperience = asyncHandler(async (req, res) => {
     return;
   }
   const workPlace = {
-    _id: getUser.id,
+    userId: getUser.id,
     orgCode: generateRandomHex(20),
     org: org,
     add: add,
@@ -199,21 +185,23 @@ const workExperience = asyncHandler(async (req, res) => {
   //Check if alrady exist
   const findWorkPlace = await WorkExperience.findOne({
     org: org,
+    userId: getUser.id,
     position: position,
   });
 
-  if (!findWorkPlace) {
-    const addWorkPlace = WorkExperience.create(workPlace);
-    if (addWorkPlace) {
-      res.status(200).json({ message: "Workplace added" });
-      return;
-    } else {
-      res.status(401).json({ message: "Not added" });
-      return;
-    }
-  } else {
+  if (findWorkPlace) {
     res.status(401).json({ message: "Not added" });
     return;
+  }
+  try {
+    const response = await WorkExperience.create(workPlace);
+    if (response) {
+      res.status(200).json(response);
+    } else {
+      res.status(400).json({ message: "Failed to submit" });
+    }
+  } catch (error) {
+    res.status(400).json({ message: "work not added" });
   }
 });
 

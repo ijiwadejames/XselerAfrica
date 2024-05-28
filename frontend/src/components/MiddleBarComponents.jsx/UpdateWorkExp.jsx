@@ -1,61 +1,24 @@
 /** @format */
 
 import { useState } from "react";
-import DataFields from "../DataFields";
 import "../../css/module.css";
-import Buttons from "../Buttons";
-import { useDataContext } from "../../Provider/ContextAPI";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faSuitcase, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { expFields, getExpLabel } from "../MyFunctions";
+import { Formik, Form, Field } from "formik";
+import DeleteButton from "../DeleteButton";
+import ConfirmationBox from "../ConfirmationBox";
+import {
+  delExperience,
+  getExperience,
+  reset,
+} from "../../features/details/workExperience/workExperienceSlice";
+import { useDispatch } from "react-redux";
 
-const UpdateWorkExp = () => {
-  const { users } = useDataContext();
+const UpdateWorkExp = ({ data }) => {
   const [isActive, setIsActive] = useState(null);
-
-  const [formData, setFormData] = useState({
-    org: users.org,
-    add: users.add,
-    position: users.position,
-    jobTitle: users.jobTitle,
-    dWStarted: users.dWStarted,
-    dWEnded: users.dWEnded,
-    started: users.started,
-    isChecked: users.isChecked,
-    duty: users.duty,
-  });
-  const fields = [
-    "org",
-    "add",
-    "position",
-    "jobTitle",
-    "isChecked",
-    "started",
-    "dWStarted",
-    "dWEnded",
-    "duty",
-  ];
-
-  const getLabel = (field) => {
-    if (field === "org") {
-      return <>Organization's Name</>;
-    } else if (field === "add") {
-      return <>Address</>;
-    } else if (field === "position") {
-      return <>Current position</>;
-    } else if (field === "jobTitle") {
-      return <>Preferred Job</>;
-    } else if (field === "dWStarted") {
-      return <>Date resumed</>;
-    } else if (field === "dWEnded") {
-      return <>Date left</>;
-    } else if (field === "started") {
-      return <>Date resumed</>;
-    } else if (field === "isChecked") {
-      return <>I currently work here</>;
-    } else if (field === "duty") {
-      return <>Responsibilities</>;
-    }
-  };
+  const [confirmDel, setConfirmDel] = useState(false);
+  const dispatch = useDispatch();
 
   const toggleFields = (field) => {
     if (isActive === field) {
@@ -65,15 +28,32 @@ const UpdateWorkExp = () => {
     }
   };
 
+  const handleDelClick = (orgCode) => {
+    handleConfirmDelete(orgCode);
+    setConfirmDel(false);
+    dispatch(getExperience());
+  };
+
+  const handleConfirmDelete = (orgCode) => {
+    const formData = {
+      orgCode,
+    };
+    dispatch(delExperience(formData));
+
+    return () => {
+      dispatch(reset());
+    };
+  };
+
   const getEditButton = (field) => {
-    if (formData[field] !== "" && formData[field] !== false) {
+    if (data[field] !== "" && data[field] !== false) {
       return (
         <div>
-          {formData[field] === true ? (
+          {data[field] === true ? (
             <div className="fw-bold"> I currently work here!</div>
           ) : (
             <div className="d-flex justify-content-between align-items-center">
-              {formData[field]}
+              {data[field]}
               <FontAwesomeIcon
                 className="mx-3 edit"
                 icon={faEdit}
@@ -88,74 +68,95 @@ const UpdateWorkExp = () => {
     }
   };
 
-  const handleChange = (fieldName, value) => {
-    setFormData({
+  const handleSubmit = (values, actions) => {
+    const formData = {
       ...formData,
-      [fieldName]: value,
-    });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setFormData({
-      ...formData,
-    });
+      [isActive]: values[isActive],
+    };
     //Dispatch
     console.log(formData);
+    actions.setSubmitting(false);
   };
 
-  const handleButtonClick = (event) => {
-    handleSubmit(event);
-    setIsActive(false);
-  };
+  // const handleButtonClick = (event) => {
+  //   handleSubmit(event);
+  //   setIsActive(false);
+  // };
 
   return (
-    <div className="row m-auto mt-3 d-flex justify-content-center align-items-center">
-      <div className="col-xs-11 col-sm-11 col-md-12 col-lg-4 bg-color rotate-div fs-1 text-center text-light fw-bold">
-        {users.org.length > 0 ? users.org[0] : ""}
-      </div>
-      <div
-        className="col-xs-11 col-sm-11 col-md-12 col-lg-8 font-13 m-auto"
-        // style={{ lineHeight: "30px", height: "100%" }}
-      >
-        {fields.map((field) => (
-          <div
-            className="col-11 font-13"
-            // style={{ lineHeight: "30px" }}
-            key={field}
-          >
-            {formData[field] !== "" && formData[field] !== false && (
-              <>
-                {getLabel(field) && (
-                  <div className="col-12 fw-bold border-bottom">
-                    {formData[field] !== true && <>{getLabel(field)}</>}
-                  </div>
-                )}
-              </>
-            )}
-            {isActive === field ? (
-              <div className="d-flex justify-content-between mb-2 align-items-center">
-                <DataFields
-                  type="text"
-                  placeholder=""
-                  width="100%"
-                  value={formData[field]}
-                  onChange={(value) => handleChange(field, value)}
-                />
-                <Buttons onClick={handleButtonClick} value="SAVE" />
-                <FontAwesomeIcon
-                  icon={faTimes}
-                  onClick={() => setIsActive(false)}
-                  className="m-auto ms-1 btn btn-danger"
-                />
+    <Formik
+      initialValues={{
+        org: "",
+        add: "",
+        position: "",
+        isChecked: "",
+        started: "",
+        dWStarted: "",
+        dWEnded: "",
+        duty: "",
+      }}
+      onSubmit={handleSubmit}
+    >
+      <Form>
+        <div className="row m-auto my-3 border border-grey rounded-2 py-3 bg-white shadow-sm d-flex justify-content-center align-items-center">
+          <DeleteButton onClick={() => setConfirmDel(!confirmDel)} />
+
+          {confirmDel && (
+            <ConfirmationBox
+              text="Are you sure you want to delete this qualification?"
+              handleDel={() => handleDelClick(data.orgCode)}
+              handleClose={() => setConfirmDel(false)}
+            />
+          )}
+
+          <div className="col-xs-11 col-sm-11 col-md-12 col-lg-4 fs-1 text-light fw-bold">
+            <div className="bg-white border border-grey rounded-2 text-center text-color">
+              <div className="bg-color m-1 py-5 rounded-2 text-center text-light">
+                <FontAwesomeIcon icon={faSuitcase} />
               </div>
-            ) : (
-              <div className="mb-3">{getEditButton(field)}</div>
-            )}
+            </div>
           </div>
-        ))}
-      </div>
-    </div>
+          <div
+            className="col-xs-11 col-sm-11 col-md-12 col-lg-8 font-13 m-auto"
+            // style={{ lineHeight: "30px", height: "100%" }}
+          >
+            {expFields.map((field) => (
+              <div
+                className="col-11 font-13"
+                // style={{ lineHeight: "30px" }}
+                key={field}
+              >
+                {data[field] !== "" && data[field] !== false && (
+                  <>
+                    {getExpLabel(field) && (
+                      <div className="col-12 fw-bold border-bottom">
+                        {data[field] !== true && <>{getExpLabel(field)}</>}
+                      </div>
+                    )}
+                  </>
+                )}
+                {isActive === field ? (
+                  <div className="d-flex justify-content-between mb-2 align-items-center">
+                    <Field type="text" name={field} className="field_format" />
+
+                    <button type="submit" className="btn btn-sm btn-dark">
+                      SAVE
+                    </button>
+                    <FontAwesomeIcon
+                      icon={faTimes}
+                      onClick={() => setIsActive(false)}
+                      className="m-auto ms-1 btn btn-danger"
+                    />
+                  </div>
+                ) : (
+                  <div className="mb-3">{getEditButton(field)}</div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </Form>
+    </Formik>
   );
 };
 export default UpdateWorkExp;

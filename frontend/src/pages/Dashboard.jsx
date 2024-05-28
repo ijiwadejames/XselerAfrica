@@ -5,7 +5,7 @@ import DashboardFeeder from "../components/DashboardFeeder";
 import SideLayout from "../components/SideLayout";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Spinner from "../components/Spinner";
+import { Spinner } from "../components/Spinner";
 
 const Dashboard = () => {
   const navigate = useNavigate();
