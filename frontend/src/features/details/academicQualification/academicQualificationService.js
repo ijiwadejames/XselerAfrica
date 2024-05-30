@@ -33,7 +33,7 @@ const updateQualification = async (formData, token) => {
     config
   );
 
-  return Array.isArray(response.data) ? response.data : [response.data];
+  return response.data;
 };
 
 const getQualification = async (token) => {

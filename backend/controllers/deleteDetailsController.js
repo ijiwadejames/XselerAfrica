@@ -22,7 +22,7 @@ const delCareerObjective = asyncHandler(async (req, res) => {
 
   const response = await Objective.deleteOne(query);
   if (response.deletedCount === 1) {
-    res.status(200).json({ message: "Successfully removed" });
+    res.status(200).json({ message: "Objective deleted successfully" });
     return;
   } else {
     res
@@ -43,7 +43,9 @@ const delWorkExperience = asyncHandler(async (req, res) => {
 
   const response = await WorkExperience.deleteOne(query);
   if (response.deletedCount === 1) {
-    res.status(200).json({ message: "Successfully removed" });
+    res
+      .status(200)
+      .json({ orgCode, message: "Experience deleted successfully" });
     return;
   } else {
     res
@@ -54,17 +56,19 @@ const delWorkExperience = asyncHandler(async (req, res) => {
 });
 
 const delQual = asyncHandler(async (req, res) => {
-  const { id } = req.body;
+  const { qualCode } = req.body;
   const loggedIn_user = req.user.id;
 
   const query = {
-    _id: id,
+    qualCode: qualCode,
     userId: loggedIn_user,
   };
 
   const response = await AcademicQualification.deleteOne(query);
   if (response.deletedCount === 1) {
-    res.status(200).json({ message: "Successfully removed" });
+    res
+      .status(200)
+      .json({ qualCode, message: "Qualification deleted successfully" });
     return;
   } else {
     res

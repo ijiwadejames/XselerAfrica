@@ -10,9 +10,7 @@ export const fields = [
 ];
 
 export const getLabel = (fields) => {
-  if (fields === "onames") {
-    return <>Other Given Names</>;
-  } else if (fields === "email") {
+  if (fields === "email") {
     return "Email";
   } else if (fields === "phone") {
     return "Phone Number";
@@ -24,8 +22,9 @@ export const getLabel = (fields) => {
     return "Linkedin";
   } else if (fields === "portfolio") {
     return "Portfolio";
+  } else {
+    return "";
   }
-  return;
 };
 
 export const academicFields = [
@@ -53,8 +52,9 @@ export const academicLabels = (academicFields) => {
     return "Class of Degree";
   } else if (academicFields === "qualCode") {
     return "Qualification Code";
+  } else {
+    return "";
   }
-  return;
 };
 
 export const expFields = [
@@ -66,24 +66,29 @@ export const expFields = [
   "dWStarted",
   "dWEnded",
   "duty",
+  "orgCode",
 ];
 
 export const getExpLabel = (expFields) => {
   if (expFields === "org") {
-    return <>Organization's Name</>;
+    return "Organization's Name";
   } else if (expFields === "add") {
-    return <>Address</>;
+    return "Address";
   } else if (expFields === "position") {
-    return <>Current position</>;
+    return "Current position";
   } else if (expFields === "dWStarted") {
-    return <>Date resumed</>;
+    return "Date resumed";
   } else if (expFields === "dWEnded") {
-    return <>Date left</>;
+    return "Date left";
   } else if (expFields === "started") {
-    return <>Date resumed</>;
+    return "Date resumed";
   } else if (expFields === "isChecked") {
-    return <>I currently work here</>;
+    return "I currently work here";
   } else if (expFields === "duty") {
-    return <>Responsibilities</>;
+    return "Responsibilities";
+  } else if (expFields === "orgCode") {
+    return "Organization Code";
+  } else {
+    return "";
   }
 };

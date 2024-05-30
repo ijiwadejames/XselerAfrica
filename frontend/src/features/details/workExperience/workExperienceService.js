@@ -18,6 +18,7 @@ const addExperience = async (formData, token) => {
   );
 
   return response.data;
+  // return Array.isArray(response.data) ? response.data : [response.data];
 };
 
 const getExperience = async (token) => {
@@ -29,7 +30,7 @@ const getExperience = async (token) => {
 
   const response = await axios.get(API_URL + "get-experience", config);
 
-  return Array.isArray(response.data) ? response.data : [response.data];
+  return response.data;
 };
 
 const updateExperience = async (formData, token) => {

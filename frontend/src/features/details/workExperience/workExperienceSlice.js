@@ -142,7 +142,7 @@ export const workExperienceSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.works = state.works.filter(
-          (val) => val.orgCode !== !action.payload.orgCode
+          (val) => val.orgCode !== action.payload.orgCode
         );
       })
       .addCase(delExperience.rejected, (state, action) => {

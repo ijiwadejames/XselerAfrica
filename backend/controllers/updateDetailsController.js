@@ -121,7 +121,7 @@ const hobbies = asyncHandler(async (req, res) => {
     options
   );
   if (response) {
-    res.status(200).json({ message: "Update Successful", response });
+    res.status(200).json(response);
     return;
   } else {
     res.status(401).json({ message: "Unsuccessful" });
@@ -158,7 +158,7 @@ const careerObjective = asyncHandler(async (req, res) => {
     options
   );
   if (response) {
-    res.status(200).json({ message: "Update Successful", response });
+    res.status(200).json(response);
     return;
   } else {
     res.status(401).json({ message: "Unsuccessful" });
@@ -168,9 +168,6 @@ const careerObjective = asyncHandler(async (req, res) => {
 
 //WORK EXPERIENCE
 const workExperience = asyncHandler(async (req, res) => {
-  const get_loggedin_user = req.user.id;
-  const user_id = req.params.id;
-  const filter = { _id: user_id };
   const {
     org,
     add,
@@ -180,7 +177,10 @@ const workExperience = asyncHandler(async (req, res) => {
     started,
     isChecked,
     duty,
+    orgCode,
   } = req.body;
+  const loggedin_user = req.user.id;
+  const filter = { userId: loggedin_user, orgCode: orgCode };
 
   //Check for empty fields
   if (!org || !add || !position || !duty) {
@@ -199,18 +199,13 @@ const workExperience = asyncHandler(async (req, res) => {
     duty: duty,
   };
 
-  if (user_id !== get_loggedin_user) {
-    res.status(401).json({ message: "Unauthorized" });
-    return;
-  }
-
-  const response = await WorkExperience.findByIdAndUpdate(
+  const response = await WorkExperience.findOneAndUpdate(
     filter,
     workPlace,
     options
   );
   if (response) {
-    res.status(200).json({ message: "Update Successful", response });
+    res.status(200).json(response);
     return;
   } else {
     res.status(401).json({ message: "Unsuccessful" });

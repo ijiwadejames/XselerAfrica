@@ -1,7 +1,6 @@
 /** @format */
 
 import "../../css/module.css";
-import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons"; // Changed faCancel to faTimes
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -24,9 +23,10 @@ const NewAQualification = ({ handleClose }) => {
       dClass: values.dClass,
     };
 
-    dispatch(newQualification(formData));
-    actions.setSubmitting(false);
-    handleClose();
+    dispatch(newQualification(formData)).then(() => {
+      actions.setSubmitting(false);
+      handleClose();
+    });
   };
 
   if (isLoading) {

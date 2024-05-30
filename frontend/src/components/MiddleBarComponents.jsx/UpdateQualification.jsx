@@ -1,6 +1,6 @@
 /** @format */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "../../css/module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,14 +9,14 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { academicLabels, academicFields } from "../MyFunctions";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form } from "formik";
 import {
   updateQualification,
   getQualification,
   delQual,
   reset,
 } from "../../features/details/academicQualification/academicQualificationSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import DeleteButton from "../DeleteButton";
 import ConfirmationBox from "../ConfirmationBox";
 
@@ -35,17 +35,16 @@ const UpdateQualification = ({ data, isError, message }) => {
       [isActive]: values[isActive],
     };
 
-    // Dispatch the update action
-    dispatch(updateQualification(formData));
-
-    // Reset the form state
-    actions.setSubmitting(false);
-    setIsActive(null);
+    dispatch(updateQualification(formData)).then(() => {
+      dispatch(getQualification());
+      actions.setSubmitting(false);
+      setIsActive(null);
+    });
   };
 
-  const handleConfirmDelete = (id) => {
+  const handleConfirmDelete = (qualCode) => {
     const formData = {
-      id,
+      qualCode,
     };
     dispatch(delQual(formData));
 
@@ -54,8 +53,8 @@ const UpdateQualification = ({ data, isError, message }) => {
     };
   };
 
-  const handleDelClick = (id) => {
-    handleConfirmDelete(id);
+  const handleDelClick = (qualCode) => {
+    handleConfirmDelete(qualCode);
     setConfirmDel(false);
     dispatch(getQualification());
   };
@@ -81,7 +80,7 @@ const UpdateQualification = ({ data, isError, message }) => {
             {confirmDel && (
               <ConfirmationBox
                 text="Are you sure you want to delete this qualification?"
-                handleDel={() => handleDelClick(data._id)}
+                handleDel={() => handleDelClick(data.qualCode)}
                 handleClose={() => setConfirmDel(false)}
               />
             )}
@@ -89,7 +88,7 @@ const UpdateQualification = ({ data, isError, message }) => {
             <div className="col-xs-11 col-sm-11 col-md-12 col-lg-4 fs-1 text-light fw-bold">
               <div className="bg-white border border-grey rounded-2 text-center text-color">
                 <div className="bg-color m-1 py-5 rounded-2 text-center text-light">
-                  <FontAwesomeIcon icon={faGraduationCap} />
+                  {data.iAttended.charAt(0)}
                 </div>
               </div>
             </div>

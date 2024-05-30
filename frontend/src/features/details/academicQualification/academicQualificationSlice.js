@@ -122,17 +122,7 @@ export const newQualificationSlice = createSlice({
       .addCase(updateQualification.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        const updatedArrayItem = action.payload;
-        updatedArrayItem.forEach((updatedItem) => {
-          const index = state.qualifications.findIndex(
-            (item) => item.id === updatedItem.id
-          );
-          if (index !== -1) {
-            state.qualifications[index] = updatedItem;
-          } else {
-            state.qualifications.push(updatedItem);
-          }
-        });
+        state.qualifications = action.payload;
       })
       .addCase(updateQualification.rejected, (state, action) => {
         state.isLoading = false;
@@ -146,7 +136,7 @@ export const newQualificationSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.qualifications = state.qualifications.filter(
-          (qual) => qual._id !== !action.payload.id
+          (qual) => qual.qualCode !== action.payload.qualCode
         );
       })
       .addCase(delQual.rejected, (state, action) => {

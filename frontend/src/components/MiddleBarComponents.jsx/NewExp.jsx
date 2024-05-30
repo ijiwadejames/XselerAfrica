@@ -4,7 +4,10 @@ import { faCancel } from "@fortawesome/free-solid-svg-icons";
 import { expFields, getExpLabel } from "../MyFunctions";
 import { Formik, Field, Form } from "formik";
 import { useDispatch } from "react-redux";
-import { addExperience } from "../../features/details/workExperience/workExperienceSlice";
+import {
+  addExperience,
+  getExperience,
+} from "../../features/details/workExperience/workExperienceSlice";
 
 const NewExp = ({ handleClose }) => {
   const dispatch = useDispatch();
@@ -22,9 +25,11 @@ const NewExp = ({ handleClose }) => {
     };
 
     //Dispatch
-    dispatch(addExperience(formData));
-    handleClose();
-    actions.setSubmitting(false);
+    dispatch(addExperience(formData)).then(() => {
+      dispatch(getExperience());
+      handleClose();
+      actions.setSubmitting(false);
+    });
   };
 
   return (
