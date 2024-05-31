@@ -3,11 +3,7 @@
 import { useState } from "react";
 import "../../css/module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEdit,
-  faGraduationCap,
-  faTimes,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { academicLabels, academicFields } from "../MyFunctions";
 import { Formik, Field, Form } from "formik";
 import {

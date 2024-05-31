@@ -9,12 +9,13 @@ import NewExp from "./NewExp";
 import { getExperience } from "../../features/details/workExperience/workExperienceSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Notifications from "../Notifications";
+import { Spinner } from "../Spinner";
 
 const WorkExperience = () => {
   const [newExp, setNewExp] = useState(false);
   const dispatch = useDispatch();
   const handleNewExp = () => setNewExp(true);
-  const { works } = useSelector((state) => state.works);
+  const { works, isLoading } = useSelector((state) => state.works);
 
   useEffect(() => {
     dispatch(getExperience());
@@ -22,6 +23,11 @@ const WorkExperience = () => {
 
   return (
     <div className="col-12">
+      {isLoading && (
+        <div className=" me-2">
+          <Spinner />
+        </div>
+      )}
       <div className="col-12 my-2 text-end">
         <FontAwesomeIcon
           className="btn btn-dark"

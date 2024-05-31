@@ -9,6 +9,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getQualification } from "../../features/details/academicQualification/academicQualificationSlice";
 import Notifications from "../Notifications";
+import { Spinner } from "../Spinner";
 
 const AcademicQualifications = () => {
   const [newQualification, setNewQualification] = useState(false);
@@ -22,12 +23,17 @@ const AcademicQualifications = () => {
     dispatch(getQualification());
   }, [dispatch]);
 
-  const { qualifications, isError, message } = useSelector(
+  const { qualifications, isError, isLoading, message } = useSelector(
     (state) => state.qualifications
   );
 
   return (
     <div className="col-12">
+      {isLoading && (
+        <div className=" me-2">
+          <Spinner />
+        </div>
+      )}
       <div className="col-12 my-2 text-end">
         <FontAwesomeIcon
           className="btn btn-dark"

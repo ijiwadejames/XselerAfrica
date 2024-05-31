@@ -6,18 +6,12 @@ const WorkExperience = require("../models/WorkExperience");
 const AcademicQualification = require("../models/AcademicQualification");
 
 const delCareerObjective = asyncHandler(async (req, res) => {
-  const objCode_id = req.params.objectiveId;
-  const userId = req.params.id;
   const loggedIn_user = req.user.id;
-
-  if (userId !== loggedIn_user) {
-    res.status(401).json({ message: "Unauthorized" });
-    return;
-  }
+  const { objCode } = req.body;
 
   const query = {
-    _id: loggedIn_user,
-    objCode: objCode_id,
+    userId: loggedIn_user,
+    objCode: objCode,
   };
 
   const response = await Objective.deleteOne(query);

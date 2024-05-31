@@ -131,28 +131,22 @@ const hobbies = asyncHandler(async (req, res) => {
 
 //UPDATE CAREER OBJECTIVE
 const careerObjective = asyncHandler(async (req, res) => {
-  const get_loggedin_user = req.user.id;
-  const user_id = req.params.id;
-
-  const filter = { _id: user_id };
-
-  const { objective } = req.body;
+  const loggedin_user = req.user.id;
+  const { objective, objCode } = req.body;
 
   //Check for empty fields
   if (!objective) {
-    res.status(401).json({ message: "All fields are required" });
+    res.status(401).json({ message: "Field is required" });
     return;
   }
+  const filter = { userId: loggedin_user, objCode: objCode };
   const options = { new: true };
+
   const updateObjective = {
     objective: objective,
   };
 
-  if (user_id !== get_loggedin_user) {
-    res.status(401).json({ message: "Unauthorized" });
-    return;
-  }
-  const response = await Objective.findByIdAndUpdate(
+  const response = await Objective.findOneAndUpdate(
     filter,
     updateObjective,
     options

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import "../../css/module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSuitcase, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { expFields, getExpLabel } from "../MyFunctions";
 import { Formik, Form, Field } from "formik";
 import DeleteButton from "../DeleteButton";
@@ -97,7 +97,7 @@ const UpdateWorkExp = ({ data }) => {
             <div className="col-xs-11 col-sm-11 col-md-12 col-lg-4 fs-1 text-light fw-bold">
               <div className="bg-white border border-grey rounded-2 text-center text-color">
                 <div className="bg-color m-1 py-5 rounded-2 text-center text-light">
-                  <FontAwesomeIcon icon={faSuitcase} />
+                  {data.org.charAt(0)}
                 </div>
               </div>
             </div>

@@ -40,7 +40,7 @@ const personal = asyncHandler(async (req, res) => {
     portfolio: portfolio,
   };
 
-  const newDetails = await Details.create(myDetails);
+  const response = await Details.create(myDetails);
 
   if (response) {
     res.status(200).json(response);
@@ -58,20 +58,20 @@ const objective = asyncHandler(async (req, res) => {
 
   //Find if it already exists
   const findObj = await Objective.findOne({ objective: objective });
-  if (!findObj) {
-    const objectDetails = {
-      _id: getUserId,
-      objective: objective,
-      objCode: generateRandomHex(20),
-    };
-    const response = await Objective.create(objectDetails);
-    if (response) {
-      res.status(200).json(response);
-      return;
-    } else {
-      res.status(401).json({ message: "Not created" });
-      return;
-    }
+  if (findObj) {
+    res.status(400).json({ message: "Duplicate objective" });
+  }
+
+  const objectDetails = {
+    userId: getUserId,
+    objective: objective,
+    objCode: generateRandomHex(20),
+  };
+
+  const response = await Objective.create(objectDetails);
+  if (response) {
+    res.status(200).json(response);
+    return;
   } else {
     res.status(401).json({ message: "Not created" });
     return;

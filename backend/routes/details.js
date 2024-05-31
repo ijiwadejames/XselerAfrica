@@ -11,7 +11,7 @@ const getDetailsController = require("../controllers/getDetailsController");
 router
   //ADD
   .post("/personal-details", protect, detailsController.personal)
-  .post("/career-objectives", protect, detailsController.objective)
+  .post("/career-objective", protect, detailsController.objective)
   .post(
     "/academic-qualification",
     protect,
@@ -24,6 +24,7 @@ router
   .get("/getMe", protect, getDetailsController.personal)
   .get("/get-qualification", protect, getDetailsController.qualification)
   .get("/get-experience", protect, getDetailsController.experience)
+  .get("/get-career-objective", protect, getDetailsController.objective)
 
   //UPDATE
   .post("/update-personal-details", protect, updateDetailsController.personal)
@@ -34,7 +35,7 @@ router
   )
   .post("/update-hobbies", protect, updateDetailsController.hobbies)
   .post(
-    "/update-career-objectives",
+    "/update-career-objective",
     protect,
     updateDetailsController.careerObjective
   )
@@ -51,7 +52,7 @@ router
     deleteDetailsController.delWorkExperience
   )
   .post(
-    "/delete-career-objective/:objectiveId/:id",
+    "/delete-career-objective",
     protect,
     deleteDetailsController.delCareerObjective
   )

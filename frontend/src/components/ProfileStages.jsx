@@ -1,11 +1,11 @@
 /** @format */
 
-import { useEffect, useState } from "react";
-import PersonalDetails from "./MiddleBarComponents.jsx/PersonalDetails";
-import CareerObjective from "./MiddleBarComponents.jsx/CareerObjective";
-import AcademicQualifications from "./MiddleBarComponents.jsx/AcademicQualifications";
-import WorkExperience from "./MiddleBarComponents.jsx/WorkExperience";
-import Hobbies from "./MiddleBarComponents.jsx/Hobbies";
+import { useState } from "react";
+import PersonalDetails from "./MiddleBarComponents/PersonalDetails";
+import CareerObjective from "./MiddleBarComponents/CareerObjective";
+import AcademicQualifications from "./MiddleBarComponents/AcademicQualifications";
+import WorkExperience from "./MiddleBarComponents/WorkExperience";
+import Hobbies from "./MiddleBarComponents/Hobbies";
 import StageIcon from "./StageIcon";
 
 const ProfileStages = () => {

@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import ProfilePicture from "../ProfilePicture";
 import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
 import { getLabel, fields } from "../MyFunctions";
 import {
   updateDetails,
@@ -32,7 +31,7 @@ const UpdatePersonalDetails = ({ details, isError, message }) => {
     if (isSuccess) {
       dispatch(reset());
     }
-  }, [dispatch]);
+  }, [isSuccess, dispatch]);
 
   const handleSubmit = (values, actions) => {
     const formData = {
@@ -48,10 +47,10 @@ const UpdatePersonalDetails = ({ details, isError, message }) => {
       formData[activeField] = values[activeField];
     }
 
-    dispatch(updateDetails(formData));
-
-    actions.setSubmitting(false);
-    toggleField(activeField);
+    dispatch(updateDetails(formData)).then(() => {
+      actions.setSubmitting(false);
+      toggleField(activeField);
+    });
   };
 
   return (

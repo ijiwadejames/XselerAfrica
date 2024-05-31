@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import "../../css/module.css";
 import UpdatePersonalDetails from "./UpdatePersonalDetails";
-import * as Yup from "yup";
 import { getDetails } from "../../features/details/personal/personalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Spinner } from "../Spinner";
