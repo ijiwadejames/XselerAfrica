@@ -71,7 +71,7 @@ const UpdateQualification = ({ data, isError, message }) => {
       {({ isSubmitting }) => (
         <Form>
           <div className="row m-auto my-3 border border-grey rounded-2 py-3 bg-white shadow-sm d-flex justify-content-center align-items-center">
-            <DeleteButton onClick={() => setConfirmDel(!confirmDel)} />
+            <DeleteButton onClick={() => setConfirmDel(true)} />
 
             {confirmDel && (
               <ConfirmationBox
